@@ -1,0 +1,299 @@
+-- Import the required modules
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Workspace = game:GetService("Workspace")
+local HttpService = game:GetService("HttpService")
+
+-- Create a new UI Screen
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Parent = Players.LocalPlayer.PlayerGui
+
+-- Create a new UI Frame
+local Frame = Instance.new("Frame")
+Frame.Size = UDim2.new(0, 300, 0, 200)
+Frame.Position = UDim2.new(0, 0, 0, 0)
+Frame.Parent = ScreenGui
+
+-- Create a new UI Text Label
+local Label = Instance.new("TextLabel")
+Label.Size = UDim2.new(1, 0, 0, 50)
+Label.Position = UDim2.new(0, 0, 0, 0)
+Label.Text = "Settings"
+Label.Font = Enum.Font.SourceSansBold
+Label.TextSize = 20
+Label.Parent = Frame
+
+-- Create a new UI Frame for settings
+local SettingsFrame = Instance.new("Frame")
+SettingsFrame.Size = UDim2.new(1, 0, 0, 150)
+SettingsFrame.Position = UDim2.new(0, 0, 0, 50)
+SettingsFrame.Parent = Frame
+
+-- Create UI Text Labels for settings
+local AutoBuyFlavorsLabel = Instance.new("TextLabel")
+local AutoBuyMachinesLabel = Instance.new("TextLabel")
+local AutoBuyTablesLabel = Instance.new("TextLabel")
+local AutoBuyTotemsLabel = Instance.new("TextLabel")
+local AutoBuyPlantsLabel = Instance.new("TextLabel")
+local AutoBlendLabel = Instance.new("TextLabel")
+local AutoSellLabel = Instance.new("TextLabel")
+
+AutoBuyFlavorsLabel.Size = UDim2.new(1, 0, 0, 25)
+AutoBuyFlavorsLabel.Position = UDim2.new(0, 0, 0, 0)
+AutoBuyFlavorsLabel.Text = "Auto Buy Flavors: "
+AutoBuyFlavorsLabel.Font = Enum.Font.SourceSans
+AutoBuyFlavorsLabel.TextSize = 16
+AutoBuyFlavorsLabel.Parent = SettingsFrame
+
+AutoBuyMachinesLabel.Size = UDim2.new(1, 0, 0, 25)
+AutoBuyMachinesLabel.Position = UDim2.new(0, 0, 0, 25)
+AutoBuyMachinesLabel.Text = "Auto Buy Machines: "
+AutoBuyMachinesLabel.Font = Enum.Font.SourceSans
+AutoBuyMachinesLabel.TextSize = 16
+AutoBuyMachinesLabel.Parent = SettingsFrame
+
+AutoBuyTablesLabel.Size = UDim2.new(1, 0, 0, 25)
+AutoBuyTablesLabel.Position = UDim2.new(0, 0, 0, 50)
+AutoBuyTablesLabel.Text = "Auto Buy Tables: "
+AutoBuyTablesLabel.Font = Enum.Font.SourceSans
+AutoBuyTablesLabel.TextSize = 16
+AutoBuyTablesLabel.Parent = SettingsFrame
+
+AutoBuyTotemsLabel.Size = UDim2.new(1, 0, 0, 25)
+AutoBuyTotemsLabel.Position = UDim2.new(0, 0, 0, 75)
+AutoBuyTotemsLabel.Text = "Auto Buy Totems: "
+AutoBuyTotemsLabel.Font = Enum.Font.SourceSans
+AutoBuyTotemsLabel.TextSize = 16
+AutoBuyTotemsLabel.Parent = SettingsFrame
+
+AutoBuyPlantsLabel.Size = UDim2.new(1, 0, 0, 25)
+AutoBuyPlantsLabel.Position = UDim2.new(0, 0, 0, 100)
+AutoBuyPlantsLabel.Text = "Auto Buy Plants: "
+AutoBuyPlantsLabel.Font = Enum.Font.SourceSans
+AutoBuyPlantsLabel.TextSize = 16
+AutoBuyPlantsLabel.Parent = SettingsFrame
+
+AutoBlendLabel.Size = UDim2.new(1, 0, 0, 25)
+AutoBlendLabel.Position = UDim2.new(0, 0, 0, 125)
+AutoBlendLabel.Text = "Auto Blend: "
+AutoBlendLabel.Font = Enum.Font.SourceSans
+AutoBlendLabel.TextSize = 16
+AutoBlendLabel.Parent = SettingsFrame
+
+AutoSellLabel.Size = UDim2.new(1, 0, 0, 25)
+AutoSellLabel.Position = UDim2.new(0, 0, 0, 150)
+AutoSellLabel.Text = "Auto Sell: "
+AutoSellLabel.Font = Enum.Font.SourceSans
+AutoSellLabel.TextSize = 16
+AutoSellLabel.Parent = SettingsFrame
+
+-- Create UI Text Boxes for settings
+local AutoBuyFlavorsTextBox = Instance.new("TextBox")
+local AutoBuyMachinesTextBox = Instance.new("TextBox")
+local AutoBuyTablesTextBox = Instance.new("TextBox")
+local AutoBuyTotemsTextBox = Instance.new("TextBox")
+local AutoBuyPlantsTextBox = Instance.new("TextBox")
+local AutoBlendTextBox = Instance.new("TextBox")
+local AutoSellTextBox = Instance.new("TextBox")
+
+AutoBuyFlavorsTextBox.Size = UDim2.new(0.5, 0, 0, 25)
+AutoBuyFlavorsTextBox.Position = UDim2.new(0, 0, 0, 0)
+AutoBuyFlavorsTextBox.Parent = SettingsFrame
+
+AutoBuyMachinesTextBox.Size = UDim2.new(0.5, 0, 0, 25)
+AutoBuyMachinesTextBox.Position = UDim2.new(0.5, 0, 0, 25)
+AutoBuyMachinesTextBox.Parent = SettingsFrame
+
+AutoBuyTablesTextBox.Size = UDim2.new(0.5, 0, 0, 25)
+AutoBuyTablesTextBox.Position = UDim2.new(0, 0, 0, 50)
+AutoBuyTablesTextBox.Parent = SettingsFrame
+
+AutoBuyTotemsTextBox.Size = UDim2.new(0.5, 0, 0, 25)
+AutoBuyTotemsTextBox.Position = UDim2.new(0.5, 0, 0, 75)
+AutoBuyTotemsTextBox.Parent = SettingsFrame
+
+AutoBuyPlantsTextBox.Size = UDim2.new(0.5, 0, 0, 25)
+AutoBuyPlantsTextBox.Position = UDim2.new(0, 0, 0, 100)
+AutoBuyPlantsTextBox.Parent = SettingsFrame
+
+AutoBlendTextBox.Size = UDim2.new(0.5, 0, 0, 25)
+AutoBlendTextBox.Position = UDim2.new(0.5, 0, 0, 125)
+AutoBlendTextBox.Parent = SettingsFrame
+
+AutoSellTextBox.Size = UDim2.new(0.5, 0, 0, 25)
+AutoSellTextBox.Position = UDim2.new(0, 0, 0, 150)
+AutoSellTextBox.Parent = SettingsFrame
+
+-- Get the game's GamePass service
+local GamePass = game:GetService("GamePass")
+
+-- Function to auto-buy items
+local function autoBuyItems()
+    -- Get the items to auto-buy
+    local itemsToBuy = {
+        ["Flavors"] = {AutoBuyFlavorsTextBox.Text},
+        ["Machines"] = {AutoBuyMachinesTextBox.Text},
+        ["Tables"] = {AutoBuyTablesTextBox.Text},
+        ["Totems"] = {AutoBuyTotemsTextBox.Text},
+        ["Plants"] = {AutoBuyPlantsTextBox.Text},
+    }
+
+    -- Loop through each item to buy
+    for item, playerNames in pairs(itemsToBuy) do
+        -- Get the player's character
+        local character = Players:FindFirstChild(playerNames)
+
+        -- If the player's character exists
+        if character then
+            -- Get the character's inventory
+            local inventory = character:FindFirstChild("Inventory")
+
+            -- If the inventory exists
+            if inventory then
+                -- Loop through each item in the inventory
+                for _, item in pairs(inventory:GetChildren()) do
+                    -- If the item is the item to buy
+                    if item.Name == item then
+                        -- Remove the item from the inventory
+                        item:Destroy()
+                    end
+                end
+
+                -- If the item is not in the inventory
+                if not inventory:FindFirstChild(item) then
+                    -- Add the item to the inventory
+                    local itemModel = require(game.ReplicatedStorage:WaitForChild("GamePass"):WaitForChild("ItemModels"):WaitForChild(item))
+                    inventory:WaitForChild("Blueprints"):WaitForChild("RecipeBlueprints"):WaitForChild(item):WaitForChild("Recipe"):WaitForChild("Item"):Clone().Parent = inventory
+                end
+            end
+        end
+    end
+end
+
+-- Function to auto-blend items
+local function autoBlendItems()
+    -- Get the items to auto-blend
+    local itemsToBlend = {
+        ["Flavors"] = {AutoBlendTextBox.Text},
+    }
+
+    -- Loop through each item to blend
+    for item, playerNames in pairs(itemsToBlend) do
+        -- Get the player's character
+        local character = Players:FindFirstChild(playerNames)
+
+        -- If the player's character exists
+        if character then
+            -- Get the character's inventory
+            local inventory = character:FindFirstChild("Inventory")
+
+            -- If the inventory exists
+            if inventory then
+                -- Loop through each item in the inventory
+                for _, item in pairs(inventory:GetChildren()) do
+                    -- If the item is the item to blend
+                    if item.Name == item then
+                        -- Add the item to the inventory
+                        local itemModel = require(game.ReplicatedStorage:WaitForChild("GamePass"):WaitForChild("ItemModels"):WaitForChild(item))
+                        inventory:WaitForChild("Blueprints"):WaitForChild("RecipeBlueprints"):WaitForChild(item):WaitForChild("Recipe"):WaitForChild("Item"):Clone().Parent = inventory
+                    end
+                end
+            end
+        end
+    end
+end
+
+-- Function to auto-sell items
+local function autoSellItems()
+    -- Get the items to sell
+    local itemsToSell = {
+        ["Flavors"] = {AutoSellTextBox.Text},
+    }
+
+    -- Loop through each item to sell
+    for item, playerNames in pairs(itemsToSell) do
+        -- Get the player's character
+        local character = Players:FindFirstChild(playerNames)
+
+        -- If the player's character exists
+        if character then
+            -- Get the character's inventory
+            local inventory = character:FindFirstChild("Inventory")
+
+            -- If the inventory exists
+            if inventory then
+                -- Loop through each item in the inventory
+                for _, item in pairs(inventory:GetChildren()) do
+                    -- If the item is the item to sell
+                    if item.Name == item then
+                        -- Add the item to the inventory
+                        item:Destroy()
+                    end
+                end
+
+                -- If the item is not in the inventory
+                if not inventory:FindFirstChild(item) then
+                    -- Add the item to the inventory
+                    local itemModel = require(game.ReplicatedStorage:WaitForChild("GamePass"):WaitForChild("ItemModels"):WaitForChild(item))
+                    inventory:WaitForChild("Blueprints"):WaitForChild("RecipeBlueprints"):WaitForChild(item):WaitForChild("Recipe"):WaitForChild("Item"):Clone().Parent = inventory
+                end
+            end
+        end
+    end
+end
+
+-- Function to auto-buy items on a timer
+local function autoBuyItemsTimer()
+    -- Wait for the next second
+    wait(1)
+
+    -- Auto-buy items
+    autoBuyItems()
+end
+
+-- Function to auto-blend items on a timer
+local function autoBlendItemsTimer()
+    -- Wait for the next second
+    wait(1)
+
+    -- Auto-blend items
+    autoBlendItems()
+end
+
+-- Function to auto-sell items on a timer
+local function autoSellItemsTimer()
+    -- Wait for the next second
+    wait(1)
+
+    -- Auto-sell items
+    autoSellItems()
+end
+
+-- Auto-buy items on a timer
+while wait(1) do
+    autoBuyItemsTimer()
+    autoBlendItemsTimer()
+    autoSellItemsTimer()
+end
+
+-- Auto-buy items when settings are updated
+while wait() do
+    -- Get the updated settings
+    local updatedSettings = {
+        ["AutoBuyFlavors"] = AutoBuyFlavorsTextBox.Text,
+        ["AutoBuyMachines"] = AutoBuyMachinesTextBox.Text,
+        ["AutoBuyTables"] = AutoBuyTablesTextBox.Text,
+        ["AutoBuyTotems"] = AutoBuyTotemsTextBox.Text,
+        ["AutoBuyPlants"] = AutoBuyPlantsTextBox.Text,
+    }
+
+    -- Loop through each updated setting
+    for setting, value in pairs(updatedSettings) do
+        -- If the setting's value is not empty
+        if value ~= "" then
+            -- Set the setting's value
+            game.StarterPlayer.LocalPlayer.PlayerGui.SettingsFrame[setting.."Label"].Text = "Auto Buy " .. setting .. ": " .. value
+        end
+    end
+end
