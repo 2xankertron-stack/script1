@@ -57,10 +57,10 @@ async def get_app_token() -> str:
     return APP_TOKEN["token"]
 
 DEMO = [
-    {"id": "demo1", "title": "BRO CELEBRATED WAY TOO EARLY 💀", "view_count": 18230, "duration": 18.4, "broadcaster_name": "DemoStreamer", "broadcaster_id": "demo"},
-    {"id": "demo2", "title": "I KNEW HE WAS HIDING THERE!!", "view_count": 12410, "duration": 22.0, "broadcaster_name": "DemoStreamer", "broadcaster_id": "demo"},
-    {"id": "demo3", "title": "the instant regret is crazy", "view_count": 7910, "duration": 16.3, "broadcaster_name": "DemoStreamer", "broadcaster_id": "demo"},
-    {"id": "demo4", "title": "1 HP clutch no way", "view_count": 6550, "duration": 31.1, "broadcaster_name": "DemoStreamer", "broadcaster_id": "demo"},
+    {"id": "demo1", "title": "BRO CELEBRATED WAY TOO EARLY 💀", "view_count": 18230, "duration": 18.4, "broadcaster_name": "DemoStreamer", "broadcaster_id": "demo", "thumbnail_url": ""},
+    {"id": "demo2", "title": "I KNEW HE WAS HIDING THERE!!", "view_count": 12410, "duration": 22.0, "broadcaster_name": "DemoStreamer", "broadcaster_id": "demo", "thumbnail_url": ""},
+    {"id": "demo3", "title": "the instant regret is crazy", "view_count": 7910, "duration": 16.3, "broadcaster_name": "DemoStreamer", "broadcaster_id": "demo", "thumbnail_url": ""},
+    {"id": "demo4", "title": "1 HP clutch no way", "view_count": 6550, "duration": 31.1, "broadcaster_name": "DemoStreamer", "broadcaster_id": "demo", "thumbnail_url": ""},
 ]
 
 class ScanReq(BaseModel):
@@ -79,6 +79,7 @@ class ClipEdit(BaseModel):
     broadcaster_id: str = ""
     broadcaster_name: str = ""
     url: str = ""
+    thumbnail_url: str = ""
     render_hint: str = ""
     trim_start: float = 0
     trim_end: float = 20
@@ -156,7 +157,7 @@ async def scan(req: Request, payload: ScanReq):
         raise HTTPException(502, "Twitch scan failed: " + rr.text[:140])
     clips = []
     for x in rr.json().get("data", []):
-        clips.append(score_clip({"id": x["id"], "title": x.get("title", "Untitled"), "view_count": int(x.get("view_count", 0)), "duration": float(x.get("duration", 0)), "broadcaster_id": x.get("broadcaster_id", user["id"]), "broadcaster_name": x.get("broadcaster_name", user.get("display_name", "")), "url": x.get("url", "")}))
+        clips.append(score_clip({"id": x["id"], "title": x.get("title", "Untitled"), "view_count": int(x.get("view_count", 0)), "duration": float(x.get("duration", 0)), "broadcaster_id": x.get("broadcaster_id", user["id"]), "broadcaster_name": x.get("broadcaster_name", user.get("display_name", "")), "url": x.get("url", ""), "thumbnail_url": x.get("thumbnail_url", "")}))
     return {"clips": sorted(clips, key=lambda x: x["score"], reverse=True)}
 
 @app.post("/api/scout")
@@ -184,7 +185,7 @@ async def scout(payload: ScoutReq):
             if rr.status_code >= 400:
                 continue
             for x in rr.json().get("data", []):
-                all_clips.append(score_clip({"id": x["id"], "title": x.get("title", "Untitled"), "view_count": int(x.get("view_count", 0)), "duration": float(x.get("duration", 0)), "broadcaster_id": x.get("broadcaster_id", u["id"]), "broadcaster_name": x.get("broadcaster_name", u.get("display_name", "")), "url": x.get("url", ""), "render_hint": "Rendering needs broadcaster/editor permission."}))
+                all_clips.append(score_clip({"id": x["id"], "title": x.get("title", "Untitled"), "view_count": int(x.get("view_count", 0)), "duration": float(x.get("duration", 0)), "broadcaster_id": x.get("broadcaster_id", u["id"]), "broadcaster_name": x.get("broadcaster_name", u.get("display_name", "")), "url": x.get("url", ""), "thumbnail_url": x.get("thumbnail_url", ""), "render_hint": "Rendering needs broadcaster/editor permission."}))
     all_clips.sort(key=lambda x: x["score"], reverse=True)
     return {"clips": all_clips[:80], "channels_found": [u.get("display_name") for u in users]}
 
